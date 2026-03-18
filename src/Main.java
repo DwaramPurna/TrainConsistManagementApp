@@ -3,9 +3,9 @@ import java.util.List;
 
 /**
  * =========================================================
- * MAIN CLASS - UseCase1TrainConsistMgmnt
+ * MAIN CLASS - TrainConsistManagementApp
  * =========================================================
- * Use Case 1: Initialize Train and Display Consist Summary [cite: 8]
+ * UC1: Initialize Train and Display Consist Summary
  */
 public class Main {
 
@@ -15,19 +15,18 @@ public class Main {
         System.out.println("   === Train Consist Management App ===    ");
         System.out.println("===========================================\n");
 
-        // Create a dynamic list to store train bogies [cite: 34]
+        // Initialize an empty List using ArrayList [cite: 25, 34]
         List<String> trainConsist = new ArrayList<>();
 
-        // Display initial consist information [cite: 18]
+        // Display initial information
         System.out.println("Train initialized successfully...");
 
-        // Display initial bogie count using size() [cite: 35]
+        // Display the initial bogie count [cite: 18, 35]
         System.out.println("Initial Bogie Count : " + trainConsist.size());
 
-        // Prints the current state of the train
+        // Prints the current state of the train [cite: 11]
         System.out.println("Current Train Consist : " + trainConsist);
 
-        // System ready message [cite: 19]
         System.out.println("\nSystem ready for operations...");
     }
 }
