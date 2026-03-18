@@ -1,38 +1,45 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.LinkedList;
 
 /**
  * =========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * =========================================================
- * UC3: Track Unique Bogie IDs (Set - HashSet)
+ * UC4: Maintain Ordered Bogie IDs (LinkedList Operations)
  */
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("===========================================");
-        System.out.println("   UC3 - Track Unique Bogie IDs (Set)     ");
+        System.out.println("   UC4 - Maintain Ordered Bogie IDs      ");
         System.out.println("===========================================\n");
 
-        // 1. Create a HashSet to store unique Bogie IDs
-        Set<String> bogieIds = new HashSet<>();
+        // 1. Create a LinkedList to model the physical train consist
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        // 2. Add Bogie IDs (including intentional duplicates)
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
-        bogieIds.add("BG101"); // Intentional Duplicate
-        bogieIds.add("BG102"); // Intentional Duplicate
+        // 2. Add bogies to the consist
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC Coach");
+        trainConsist.add("Cargo Van");
 
-        // 3. Display the results
-        System.out.println("Status: Adding bogies BG101, BG102, BG103, BG101, BG102...");
+        // 3. Add to Head and Tail
+        trainConsist.addFirst("Locomotive"); // Engine at the front
+        trainConsist.addLast("Guard Van");    // Guard at the back
 
-        // HashSet automatically removes duplicates
-        System.out.println("Final Unique Bogie IDs: " + bogieIds);
-        System.out.println("Total Unique Bogies: " + bogieIds.size());
+        System.out.println("Initial Consist (Sequential):");
+        System.out.println(trainConsist + "\n");
 
-        System.out.println("\nUC3: Deduplication completed successfully.");
+        // 4. Positional Insertion (Add Pantry Car at index 2)
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("After adding 'Pantry Car' at index 2:");
+        System.out.println(trainConsist + "\n");
+
+        // 5. Head and Tail Removal
+        trainConsist.removeFirst(); // Detaching Engine
+        trainConsist.removeLast();  // Detaching Guard
+
+        System.out.println("After detaching Engine and Guard:");
+        System.out.println("Final Consist: " + trainConsist);
+
+        System.out.println("\nUC4: Sequential ordering maintained successfully.");
     }
 }
