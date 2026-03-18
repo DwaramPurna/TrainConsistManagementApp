@@ -5,28 +5,40 @@ import java.util.List;
  * =========================================================
  * MAIN CLASS - TrainConsistManagementApp
  * =========================================================
- * UC1: Initialize Train and Display Consist Summary
+ * UC2: Add Passenger Bogies to Train (ArrayList Operations)
  */
 public class Main {
 
     public static void main(String[] args) {
-        // Display welcome banner [cite: 33]
         System.out.println("===========================================");
-        System.out.println("   === Train Consist Management App ===    ");
+        System.out.println("   UC2 - Add Passenger Bogies to Train    ");
         System.out.println("===========================================\n");
 
-        // Initialize an empty List using ArrayList [cite: 25, 34]
-        List<String> trainConsist = new ArrayList<>();
+        // 1. Create an ArrayList to hold passenger bogies [cite: 165]
+        List<String> passengerBogies = new ArrayList<>();
 
-        // Display initial information
-        System.out.println("Train initialized successfully...");
+        // 2. CREATE (Add bogies) [cite: 166]
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("AC Chair");
+        passengerBogies.add("First Class");
 
-        // Display the initial bogie count [cite: 18, 35]
-        System.out.println("Initial Bogie Count : " + trainConsist.size());
+        System.out.println("After Adding Bogies:");
+        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
 
-        // Prints the current state of the train [cite: 11]
-        System.out.println("Current Train Consist : " + trainConsist);
+        // 3. DELETE (Remove a bogie) [cite: 168]
+        passengerBogies.remove("AC Chair");
+        System.out.println("After Removing 'AC Chair':");
+        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
 
-        System.out.println("\nSystem ready for operations...");
+        // 4. READ (Check existence) [cite: 169]
+        System.out.println("Checking if 'Sleeper' exists:");
+        boolean hasSleeper = passengerBogies.contains("Sleeper");
+        System.out.println("Contains Sleeper? : " + hasSleeper + "\n");
+
+        // 5. Final Consist State [cite: 170]
+        System.out.println("Final Train Passenger Consist:");
+        System.out.println(passengerBogies);
+
+        System.out.println("\nUC2 operations completed successfully...");
     }
 }
