@@ -1,45 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Pattern;
 
-// Custom Bogie Class (Reused from previous UCs)
-class Bogie {
-    String name;
-    int capacity;
-
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-}
-
+/**
+ * =========================================================
+ * MAIN CLASS - TrainConsistManagementApp
+ * =========================================================
+ * UC11: Validate Train ID & Cargo Codes (Regex)
+ */
 public class Main {
+
     public static void main(String[] args) {
         System.out.println("===========================================");
-        System.out.println("   UC10 - Count Total Seats (reduce)     ");
+        System.out.println("   UC11 - Input Validation (Regex)       ");
         System.out.println("===========================================\n");
 
-        // 1. Setup the train consist
-        List<Bogie> trainConsist = new ArrayList<>();
-        trainConsist.add(new Bogie("Sleeper", 72));
-        trainConsist.add(new Bogie("AC Chair", 56));
-        trainConsist.add(new Bogie("First Class", 24));
-        trainConsist.add(new Bogie("General", 90));
+        // 1. Define Regex Patterns
+        // TRN- followed by exactly 4 digits
+        String trainIdPattern = "^TRN-\\d{4}$";
+        // 3 Uppercase letters, a hyphen, and 2 Uppercase letters
+        String cargoCodePattern = "^[A-Z]{3}-[A-Z]{2}$";
 
-        // 2. Aggregate capacities using map and reduce
-        // Step A: map(b -> b.capacity) converts Bogie objects to Integers
-        // Step B: reduce(0, (a, b) -> a + b) sums them up
-        int totalSeats = trainConsist.stream()
-                .map(b -> b.capacity)
-                .reduce(0, (sum, cap) -> sum + cap);
+        // 2. Test Inputs
+        String testTrainId = "TRN-1234";
+        String testCargoCode = "PET-AB";
+        String invalidId = "TRAIN123";
 
-        // 3. Display Result
-        System.out.println("Train Configuration:");
-        trainConsist.forEach(b -> System.out.println("- " + b.name + ": " + b.capacity + " seats"));
+        // 3. Perform Validation using Pattern.matches()
+        System.out.println("Validating Train ID: " + testTrainId);
+        boolean isIdValid = Pattern.matches(trainIdPattern, testTrainId);
+        System.out.println("Is Valid? : " + isIdValid);
 
-        System.out.println("\n-------------------------------------------");
-        System.out.println("TOTAL SEATING CAPACITY : " + totalSeats);
-        System.out.println("-------------------------------------------");
+        System.out.println("\nValidating Cargo Code: " + testCargoCode);
+        boolean isCargoValid = Pattern.matches(cargoCodePattern, testCargoCode);
+        System.out.println("Is Valid? : " + isCargoValid);
 
-        System.out.println("\nUC10: Total capacity aggregation completed.");
+        System.out.println("\nValidating Invalid ID: " + invalidId);
+        boolean isInvalidMatch = Pattern.matches(trainIdPattern, invalidId);
+        System.out.println("Is Valid? : " + isInvalidMatch);
+
+        System.out.println("\nUC11: Regex validation logic implemented.");
     }
 }
