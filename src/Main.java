@@ -1,58 +1,60 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// 1. Define GoodsBogie with Type and Cargo attributes
-class GoodsBogie {
-    String type; // e.g., "Cylindrical", "Open", "Box"
-    String cargo; // e.g., "Petroleum", "Coal", "Grain"
+// 1. Define the Custom Exception Class (UC14)
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
 
-    public GoodsBogie(String type, String cargo) {
+// 2. The Bogie class with Validation logic
+class PassengerBogie {
+    String type;
+    int capacity;
+
+    public PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+        // UC14 Rule: Capacity must be > 0
+        if (capacity <= 0) {
+            throw new InvalidCapacityException("Capacity must be greater than zero for: " + type);
+        }
         this.type = type;
-        this.cargo = cargo;
+        this.capacity = capacity;
     }
 
     @Override
     public String toString() {
-        return type + " [" + cargo + "]";
+        return type + " (" + capacity + " seats)";
     }
 }
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("===========================================");
-        System.out.println("   UC12 - Safety Compliance Check        ");
+        System.out.println("   === Train Consist Management App ===    ");
+        System.out.println("   UC14 - Custom Exception Handling        ");
         System.out.println("===========================================\n");
 
-        // 2. Setup a list of goods bogies
-        List<GoodsBogie> goodsConsist = new ArrayList<>();
-        goodsConsist.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        goodsConsist.add(new GoodsBogie("Open", "Coal"));
-        goodsConsist.add(new GoodsBogie("Box", "Grain"));
-        // Uncomment the line below to test a safety violation:
-        // goodsConsist.add(new GoodsBogie("Cylindrical", "Coal"));
+        List<PassengerBogie> train = new ArrayList<>();
 
-        System.out.println("Current Goods Consist: " + goodsConsist);
+        try {
+            // Adding valid bogies
+            System.out.println("Adding valid bogies...");
+            train.add(new PassengerBogie("Sleeper", 72));
+            train.add(new PassengerBogie("AC Chair", 56));
 
-        // 3. Apply Safety Rule:
-        // IF type is "Cylindrical", cargo MUST be "Petroleum".
-        // Others can have any cargo.
-        boolean isTrainSafe = goodsConsist.stream().allMatch(b -> {
-            if (b.type.equalsIgnoreCase("Cylindrical")) {
-                return b.cargo.equalsIgnoreCase("Petroleum");
-            }
-            return true; // Non-cylindrical bogies are always considered safe here
-        });
+            // Adding an invalid bogie (This triggers the exception)
+            System.out.println("Attempting to add a bogie with 0 capacity...");
+            train.add(new PassengerBogie("General", 0));
 
-        // 4. Display Safety Status
-        System.out.println("\n--- SAFETY REPORT ---");
-        if (isTrainSafe) {
-            System.out.println("STATUS: SAFE ✅");
-            System.out.println("All cylindrical bogies are carrying authorized cargo.");
-        } else {
-            System.out.println("STATUS: UNSAFE ❌");
-            System.out.println("DANGER: Unauthorized cargo detected in Cylindrical bogies!");
+        } catch (InvalidCapacityException e) {
+            // Handle the error gracefully
+            System.err.println("ALERT: " + e.getMessage());
         }
 
-        System.out.println("\nUC12: Safety validation completed.");
+        System.out.println("\nFinal Verified Train Consist:");
+        train.forEach(System.out::println);
+
+        System.out.println("\nSystem operation completed successfully.");
     }
 }
