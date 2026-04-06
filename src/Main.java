@@ -1,33 +1,39 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+// 1. Define the Custom Exception
+class CargoSafetyException extends Exception {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
 
 public class Main {
+    // 2. Method to assign cargo with safety validation
+    public static String assignCargo(String bogieType, String cargoType) throws CargoSafetyException {
+        // Safety Rule: Rectangular bogies cannot carry Petroleum
+        if (bogieType.equalsIgnoreCase("Rectangular") && cargoType.equalsIgnoreCase("Petroleum")) {
+            throw new CargoSafetyException("CRITICAL ERROR: Petroleum cannot be assigned to a Rectangular bogie!");
+        }
+        return "Cargo '" + cargoType + "' successfully assigned to " + bogieType + " bogie.";
+    }
+
     public static void main(String[] args) {
-        System.out.println("===========================================");
-        System.out.println("   UC13 - Performance Comparison         ");
-        System.out.println("===========================================\n");
+        System.out.println("=== UC15: Safe Cargo Assignment ===");
 
-        int iterations = 50000;
+        // 3. Using try-catch-finally for structured handling
+        try {
+            System.out.println("Attempting Assignment 1...");
+            System.out.println(assignCargo("Cylindrical", "Petroleum")); // Valid
 
-        // 1. Test ArrayList
-        List<Integer> arrayList = new ArrayList<>();
-        long startTime = System.nanoTime();
-        for (int i = 0; i < iterations; i++) {
-            arrayList.add(0, i); // Adding at the beginning (Heavy operation)
+            System.out.println("\nAttempting Assignment 2...");
+            System.out.println(assignCargo("Rectangular", "Petroleum")); // Invalid - Throws Exception
+
+        } catch (CargoSafetyException e) {
+            // Catching the error so the program continues
+            System.err.println("SAFETY ALERT: " + e.getMessage());
+        } finally {
+            // This block ALWAYS runs, regardless of success or error
+            System.out.println("\n[Finally Block] Cargo safety validation process completed.");
         }
-        long endTime = System.nanoTime();
-        System.out.println("ArrayList Time: " + (endTime - startTime) + " ns");
 
-        // 2. Test LinkedList
-        List<Integer> linkedList = new LinkedList<>();
-        startTime = System.nanoTime();
-        for (int i = 0; i < iterations; i++) {
-            linkedList.add(0, i); // Adding at the beginning (Light operation)
-        }
-        endTime = System.nanoTime();
-        System.out.println("LinkedList Time: " + (endTime - startTime) + " ns");
-
-        System.out.println("\nUC13: Performance data collected.");
+        System.out.println("\nProgram execution continues... System is stable.");
     }
 }
