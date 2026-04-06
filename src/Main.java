@@ -1,4 +1,3 @@
-// 1. Define the Custom Exception
 class CargoSafetyException extends Exception {
     public CargoSafetyException(String message) {
         super(message);
@@ -6,34 +5,36 @@ class CargoSafetyException extends Exception {
 }
 
 public class Main {
-    // 2. Method to assign cargo with safety validation
+    // Logic for UC15
     public static String assignCargo(String bogieType, String cargoType) throws CargoSafetyException {
-        // Safety Rule: Rectangular bogies cannot carry Petroleum
         if (bogieType.equalsIgnoreCase("Rectangular") && cargoType.equalsIgnoreCase("Petroleum")) {
-            throw new CargoSafetyException("CRITICAL ERROR: Petroleum cannot be assigned to a Rectangular bogie!");
+            throw new CargoSafetyException("Petroleum cannot be assigned to a Rectangular bogie!");
         }
-        return "Cargo '" + cargoType + "' successfully assigned to " + bogieType + " bogie.";
+        return "Success";
+    }
+    public static int[] bubbleSort(int[] capacities) {
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    // Swap the elements
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+        return capacities;
     }
 
     public static void main(String[] args) {
-        System.out.println("=== UC15: Safe Cargo Assignment ===");
-
-        // 3. Using try-catch-finally for structured handling
         try {
-            System.out.println("Attempting Assignment 1...");
-            System.out.println(assignCargo("Cylindrical", "Petroleum")); // Valid
-
-            System.out.println("\nAttempting Assignment 2...");
-            System.out.println(assignCargo("Rectangular", "Petroleum")); // Invalid - Throws Exception
-
+            System.out.println(assignCargo("Cylindrical", "Petroleum"));
+            System.out.println(assignCargo("Rectangular", "Petroleum"));
         } catch (CargoSafetyException e) {
-            // Catching the error so the program continues
-            System.err.println("SAFETY ALERT: " + e.getMessage());
+            System.err.println("Caught: " + e.getMessage());
         } finally {
-            // This block ALWAYS runs, regardless of success or error
-            System.out.println("\n[Finally Block] Cargo safety validation process completed.");
+            System.out.println("Validation completed.");
         }
-
-        System.out.println("\nProgram execution continues... System is stable.");
     }
 }
