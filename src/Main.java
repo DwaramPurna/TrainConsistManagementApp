@@ -37,6 +37,16 @@ public class Main {
         Arrays.sort(names);
         return names;
     }
+    // UC18: Linear Search (Searching Logic)
+    public static boolean findBogie(String[] ids, String target) {
+        for (String id : ids) {
+            // We use equalsIgnoreCase so "bg101" matches "BG101"
+            if (id.equalsIgnoreCase(target)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         // Verification prints
